@@ -2,14 +2,20 @@ import React, { useState } from "react";
 
 
 
-//create your first component
 const Home = () => {
 
-	// let nuevoTodo = "";
+
 	const [nuevoTodo, setNuevoTodo] = useState("Tarea Nueva");
+	const [todos, setTodos] = useState(["Una tarea de prueba", "Dos tareas de prueba", "Treas tareas de prueba"]);
 
 	const handleClick = () => {
+		setTodos([...todos, nuevoTodo])
+	}
 
+
+	const deleteTodo = (indice) => {
+		const listaNueva = todos.filter((todo, i) => i !== indice)
+		setTodos(listaNueva);
 	}
 
 	const handleChange = (event) => {
@@ -21,21 +27,29 @@ const Home = () => {
 		<div className="text-center">
 			<h1 className="text-center mt-5">Todos!</h1>
 
+			<div className="container">
+				<div className="d-flex gap-2">
 
-			<div>
-				<input type="text" onChange={handleChange}/>
-				<button onClick={handleClick}>
-				handleClick
-				</button>
+					<div></div>
+					<input type="text" className="form-control" onChange={handleChange} />
+					<button onClick={handleClick} className="btn btn-primary">
+						Agregar
+					</button>
+				</div>
+
+
+
+				<p>{nuevoTodo}</p>
+				<ul className="list-group">
+					{todos.map(({ todo, indice }) => {
+						return (
+							<li className={`list-group-item d-flex justify-content-between align-items-center ${indice % 2 === 0 ? "bg-light" : ""}`}>
+								{todo} <button className="btn btn-danger" onClick={deleteTodo}>X</button>
+							</li>
+						)
+					})}
+				</ul>
 			</div>
-			<ul>
-				<li>
-
-				</li>
-				<li>
-
-				</li>
-			</ul>
 		</div>
 	);
 };
