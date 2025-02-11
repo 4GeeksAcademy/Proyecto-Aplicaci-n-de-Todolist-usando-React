@@ -6,7 +6,7 @@ const Home = () => {
 
 
 	const [nuevoTodo, setNuevoTodo] = useState("Tarea Nueva");
-	const [todos, setTodos] = useState(["Una tarea de prueba", "Dos tareas de prueba", "Treas tareas de prueba"]);
+	const [todos, setTodos] = useState(["Make the bed", "Wash my hands", "Eat", "Walk the dog"]);
 
 	const handleClick = () => {
 		setTodos([...todos, nuevoTodo])
@@ -39,15 +39,17 @@ const Home = () => {
 
 
 
-				<p>{nuevoTodo}</p>
+				{/* <p>Nueva tarea: {nuevoTodo} </p> */}
+
 				<ul className="list-group">
-					{todos.map(({ todo, indice }) => {
+					{todos.map((todo, indice) => {
 						return (
 							<li className={`list-group-item d-flex justify-content-between align-items-center ${indice % 2 === 0 ? "bg-light" : ""}`}>
-								{todo} <button className="btn btn-danger" onClick={deleteTodo}>X</button>
+								{todo} <button className="btn btn-danger" onClick={() => deleteTodo(indice)}>X</button>
 							</li>
 						)
 					})}
+
 				</ul>
 			</div>
 		</div>

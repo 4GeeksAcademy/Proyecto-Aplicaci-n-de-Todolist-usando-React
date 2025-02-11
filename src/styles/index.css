@@ -18,4 +18,15 @@ body {
   color: black;
   border-radius: 5px;
   background-color: white;
+  
+
 }
+
+
+  h1 {
+    margin: 10px 0;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #000;
+  }
+  
