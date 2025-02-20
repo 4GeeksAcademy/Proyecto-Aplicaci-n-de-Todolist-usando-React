@@ -1,12 +1,20 @@
-import React, { useState } from "react";
-
-
+import React, { useEffect, useState } from "react";
 
 const Home = () => {
 
 
-	const [nuevoTodo, setNuevoTodo] = useState("Tarea Nueva");
-	const [todos, setTodos] = useState(["Make the bed", "Wash my hands", "Eat", "Walk the dog"]);
+	const [nuevoTodo, setNuevoTodo] = useState("");
+	const [todos, setTodos] = useState([]);
+
+	const getTask = async () => {
+		try {
+			const response = await fetch("https://playground.4geeks.com/todo/users/alejandro")
+			const data = await response.json()
+			setTodos(data.todos) 
+
+		} catch (error) {
+		}
+	}
 
 	const handleClick = () => {
 		setTodos([...todos, nuevoTodo])
@@ -15,12 +23,18 @@ const Home = () => {
 
 	const deleteTodo = (indice) => {
 		const listaNueva = todos.filter((todo, i) => i !== indice)
-		setTodos(listaNueva);
+		setTodos(listaNueva.data.todos);
 	}
 
 	const handleChange = (event) => {
 		setNuevoTodo(event.target.value);
 	}
+
+
+
+	useEffect(() => {
+		getTask()
+	}, [])
 
 
 	return (
@@ -45,7 +59,7 @@ const Home = () => {
 					{todos.map((todo, indice) => {
 						return (
 							<li className={`list-group-item d-flex justify-content-between align-items-center ${indice % 2 === 0 ? "bg-light" : ""}`}>
-								{todo} <button className="btn btn-danger" onClick={() => deleteTodo(indice)}>X</button>
+								{todo.label} <button className="btn btn-danger" onClick={() => deleteTodo(indice)}>X</button>
 							</li>
 						)
 					})}
