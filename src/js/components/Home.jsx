@@ -46,6 +46,7 @@ export default function Home() {
 	};
 
 	const handleDelete = (todoId) => {
+		console.log("ID de la tarea a eliminar:", todoId);
 		fetch(`https://playground.4geeks.com/todo/todos/${todoId}`, {
 			method: "DELETE",
 		})
@@ -77,7 +78,7 @@ export default function Home() {
 				<ul className="list-group">
 					{tasks && tasks.length > 0 && tasks.map((task, indice) => {
 						return (
-							<li className={`list-group-item d-flex justify-content-between align-items-center ${indice % 2 === 0 ? "bg-light" : ""}`}>
+							<li key={indice} className={`list-group-item d-flex justify-content-between align-items-center ${indice % 2 === 0 ? "bg-light" : ""}`}>
 								{task.label} <button className="btn btn-danger" onClick={() => handleDelete(task.id)}>Delete</button>
 							</li>
 						)
