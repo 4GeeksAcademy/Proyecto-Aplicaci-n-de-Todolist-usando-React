@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function Home = () {
+export default function Home() {
 	const [task, setTask] = useState("");
 	const [tasks, setTasks] = useState([]);
 
@@ -10,7 +10,7 @@ export default function Home = () {
 
 
 	const fatchTasks = () => {
-		fetch("https://playground.4geeks.com/todo/users", {
+		fetch("https://playground.4geeks.com/todo/users/alejandrorcc7", {
 			method: "GET",
 			headers: { "Content-Type": "application/json", },
 		})
@@ -26,11 +26,11 @@ export default function Home = () {
 			.catch((error) => console.error("Error al obtener tareas:", error));
 	};
 
-	const handleKeyDown = (indice) => {
+	const handleKeyDown = (e) => {
 		if (e.key === "Enter" && task.trim() !== "") {
 			const newTask = { label: task, done: false };
 
-			fetch(`https://playground.4geeks.com/todo/todos/${indice}`, {
+			fetch(`https://playground.4geeks.com/todo/todos/alejandrorcc7`, {
 				method: "POST",
 				headers: { "Content-type": "application/json" },
 				body: JSON.stringify(newTask),
@@ -46,21 +46,17 @@ export default function Home = () {
 	};
 
 	const handleDelete = (todoId) => {
-		const numericId = parseInt(todoId, 10);
-		if (inNaN(numericId)) {
-			console.error("Error: ID de tarea no es un numero:", todoId);
-			return;
-		}
+		fetch(`https://playground.4geeks.com/todo/todos/${todoId}`, {
+			method: "DELETE",
+		})
 
-		console.log("Eliminar tarea con ID:", numericId);
-
-		fetch((reponse) => {
-			if (!reponse.ok) throw new Error("Error al eliminar la tarea");
+		.then((response) => {
+			if (!response.ok) throw new Error("Error al eliminar la tarea");
 			return response.text();
 		})
 			.then((message) => {
 				console.log("Respuesta de la API:", message);
-				setTasks(tasks.filter((task.id !== numericId));
+				setTasks(tasks.filter((task.id !== todoId)));
 			})
 			.catch((error) => console.error("Error al eliminar tarea:", error));
 	};
@@ -73,25 +69,19 @@ export default function Home = () {
 				<div className="d-flex gap-2">
 
 					<div></div>
-					<input type="text" className="form-control" value={setTasks} onChange={(e) => setTasks(e.target.value)} onAbort={handleKeyDown} />
+					<input type="text" className="form-control" value={task} onChange={(e) => setTask(e.target.value)} onKeyDown={handleKeyDown} />
 					<button onClick={handleKeyDown} className="btn btn-primary">
 						Agregar
 					</button>
 				</div>
-
-
-
-				{/* <p>Nueva tarea: {nuevoTask} </p> */}
-
 				<ul className="list-group">
-					{task.map((task, indice) => {
+					{tasks && tasks.length > 0 && tasks.map((task, indice) => {
 						return (
 							<li className={`list-group-item d-flex justify-content-between align-items-center ${indice % 2 === 0 ? "bg-light" : ""}`}>
-								{task.label} <button className="btn btn-danger" onClick={() => handleDelete(indice)}>X</button>
+								{task.label} <button className="btn btn-danger" onClick={() => handleDelete(task.id)}>Delete</button>
 							</li>
 						)
 					})}
-
 				</ul>
 			</div>
 		</div>
