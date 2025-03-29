@@ -12,14 +12,28 @@ body {
   font-weight: 300;
 }
 
+.text-center-container{
+  text-align: center;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #333833;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
 
+.text-cente {
+  text-align: center;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #333833;
+  border-radius: 5px;
+  color: white;  
+}
 
 .text-center {
   color: black;
   border-radius: 5px;
-  background-color: white;
-  
-
+  background-color: rgb(254, 248, 248);
 }
 
 
@@ -29,4 +43,3 @@ body {
     line-height: 1.2;
     color: #000;
   }
-  
